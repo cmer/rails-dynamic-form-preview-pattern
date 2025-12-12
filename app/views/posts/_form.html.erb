@@ -1,0 +1,26 @@
+<%= form_with model: post do |f| %>
+  <div>
+    <%= f.label :title %>
+    <%= f.text_field :title, "aria-invalid": post.errors[:title].any? || nil %>
+    <% if post.errors[:title].any? %>
+      <small><%= post.errors[:title].first %></small>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :body %>
+    <%= f.text_area :body, "aria-invalid": post.errors[:body].any? || nil %>
+    <% if post.errors[:body].any? %>
+      <small><%= post.errors[:body].first %></small>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :author %>
+    <%= f.text_field :author %>
+  </div>
+
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>
