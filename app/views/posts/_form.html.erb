@@ -9,7 +9,7 @@
 
   <div>
     <%= f.label :body %>
-    <%= f.text_area :body, "aria-invalid": post.errors[:body].any? || nil %>
+    <%= f.text_area :body, "aria-invalid": post.errors[:body].any? || nil, rows: 10 %>
     <% if post.errors[:body].any? %>
       <small><%= post.errors[:body].first %></small>
     <% end %>
@@ -19,6 +19,13 @@
     <%= f.label :author %>
     <%= f.text_field :author %>
   </div>
+
+  <article>
+    <header>Preview</header>
+    <div id="preview">
+      <%= render_markdown(post.body) %>
+    </div>
+  </article>
 
   <div>
     <%= f.submit %>
