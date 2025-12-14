@@ -1,10 +1,10 @@
-# Rails Form Preview Pattern
+# Rails Dynamic Form Preview Pattern
 
 A pattern for live form updates in Rails applications using Turbo Streams and Stimulus. This repository serves as both a **demo application** and the **source code** for the pattern.
 
-## What is the Form Preview Pattern?
+## What is the Dynamic Form Preview Pattern?
 
-The Form Preview Pattern enables real-time form updates without full page reloads. As users interact with form fields, the form is submitted in the background and morphed in-place using Turbo Streams. This allows for:
+The Dynamic Form Pattern enables real-time form updates without full page reloads. As users interact with form fields, the form is submitted in the background and morphed in-place using Turbo Streams. This allows for:
 
 - **Live previews** — Show rendered content (e.g., Markdown) as the user types
 - **Dynamic field updates** — Update dependent fields, calculations, or UI based on input
@@ -17,8 +17,8 @@ To run this demo application locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/cmer/rails-form-preview-pattern.git
-cd rails-form-preview-pattern
+git clone https://github.com/cmer/rails-dynamic-form-preview-pattern.git
+cd rails-dynamic-form-preview-pattern
 
 # Install dependencies
 bundle install
