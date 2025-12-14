@@ -1,7 +1,9 @@
-<%= form_with model: post do |f| %>
+<%= form_with model: post, id: form_preview_form_id(post), data: { controller: "form-preview", form_preview_debounce_value: 0 } do |f| %>
+  <%= form_preview_hidden_field %>
+
   <div>
     <%= f.label :title %>
-    <%= f.text_field :title, "aria-invalid": post.errors[:title].any? || nil %>
+    <%= f.text_field :title, "aria-invalid": post.errors[:title].any? || nil, data: { action: "blur->form-preview#preview" } %>
     <% if post.errors[:title].any? %>
       <small><%= post.errors[:title].first %></small>
     <% end %>
@@ -9,7 +11,7 @@
 
   <div>
     <%= f.label :body %>
-    <%= f.text_area :body, "aria-invalid": post.errors[:body].any? || nil, rows: 10 %>
+    <%= f.text_area :body, "aria-invalid": post.errors[:body].any? || nil, rows: 6, data: { action: "input->form-preview#preview", form_preview_debounce_value: 300 } %>
     <% if post.errors[:body].any? %>
       <small><%= post.errors[:body].first %></small>
     <% end %>
@@ -17,7 +19,20 @@
 
   <div>
     <%= f.label :author %>
-    <%= f.text_field :author %>
+    <%= f.text_field :author, "aria-invalid": post.errors[:author].any? || nil, data: { action: "blur->form-preview#preview" } %>
+    <% if post.errors[:author].any? %>
+      <small><%= post.errors[:author].first %></small>
+    <% end %>
+  </div>
+
+  <div>
+    <%= f.label :publish_on %>
+    <%= f.date_field :publish_on, "aria-invalid": post.errors[:publish_on].any? || nil, data: { action: "change->form-preview#preview" } %>
+    <% if post.errors[:publish_on].any? %>
+      <small><%= post.errors[:publish_on].first %></small>
+    <% elsif post.publish_on.present? %>
+      <small>Publish on <%= post.publish_on.to_date.strftime("%B %d, %Y") %></small>
+    <% end %>
   </div>
 
   <article>

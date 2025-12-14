@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  include FormPreviewHelper
+
   before_action :set_post, only: %i[show edit update destroy]
 
   def index
@@ -17,6 +19,7 @@ class PostsController < ApplicationController
 
   def create
     @post = Post.new(post_params)
+    return if render_form_preview(@post)
 
     if @post.save
       redirect_to @post, notice: "Post was successfully created."
@@ -26,7 +29,10 @@ class PostsController < ApplicationController
   end
 
   def update
-    if @post.update(post_params)
+    @post.assign_attributes(post_params)
+    return if render_form_preview(@post)
+
+    if @post.save
       redirect_to @post, notice: "Post was successfully updated."
     else
       render :edit, status: :unprocessable_entity
@@ -45,6 +51,6 @@ class PostsController < ApplicationController
   end
 
   def post_params
-    params.require(:post).permit(:title, :author, :body)
+    params.fetch(:post, {}).permit(:title, :author, :body, :publish_on)
   end
 end
