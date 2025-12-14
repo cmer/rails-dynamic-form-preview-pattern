@@ -2,6 +2,8 @@
 
 A pattern for live form updates in Rails applications using Turbo Streams and Stimulus. This repository serves as both a **demo application** and the **source code** for the pattern.
 
+> **🤖 LLM Users:** See [LLM.md](https://github.com/cmer/rails-dynamic-form-preview-pattern/blob/main/LLM.md) for a token-efficient implementation guide.
+
 ## What is the Dynamic Form Preview Pattern?
 
 The Dynamic Form Pattern enables real-time form updates without full page reloads. As users interact with form fields, the form is submitted in the background and morphed in-place using Turbo Streams. This allows for:
