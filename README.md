@@ -11,6 +11,31 @@ The Form Preview Pattern enables real-time form updates without full page reload
 - **Conditional validation** — Display validation errors only after the user has attempted to submit
 - **Enhanced UX** — Provide immediate feedback without page refreshes
 
+## Running the Demo
+
+To run this demo application locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/cmer/rails-form-preview-pattern.git
+cd rails-form-preview-pattern
+
+# Install dependencies
+bundle install
+
+# Set up the database
+bin/rails db:create db:migrate db:seed
+
+# Start the server
+bin/rails server
+```
+
+Visit `http://localhost:3000/posts` to see the form preview pattern in action. Try:
+
+- Creating a new post and typing in the body field to see live Markdown preview
+- Submitting an invalid form, then editing fields to see live validation updates
+- Changing the publish date to see the formatted date update instantly
+
 ## How It Works
 
 ```
