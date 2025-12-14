@@ -39,7 +39,10 @@ export default class extends Controller {
     formPreviewInput.value = true
     form.appendChild(formPreviewInput)
 
+    const hadNoValidate = form.noValidate
+    form.noValidate = true
     form.requestSubmit()
+    form.noValidate = hadNoValidate
 
     formPreviewInput.remove()
   }
