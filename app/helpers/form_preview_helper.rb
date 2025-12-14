@@ -4,6 +4,7 @@
 # Documentation: https://github.com/cmer/rails-dynamic-form-preview-pattern/blob/main/README.md
 # LLM Guide:     https://github.com/cmer/rails-dynamic-form-preview-pattern/blob/main/LLM.md
 module FormPreviewHelper
+  WAS_USER_SUBMITTED_KEY = "form_preview.was_user_submitted"
   # Handles form preview requests by rendering a Turbo Stream morph response.
   # Returns true if preview was rendered, nil if normal form submission.
   #
@@ -14,7 +15,7 @@ module FormPreviewHelper
   # @return [Boolean, nil]
   def render_form_preview(model, **args)
     if !form_preview?
-      @form_was_user_submitted = true
+      request.env[WAS_USER_SUBMITTED_KEY] = true
       return
     end
 
@@ -36,7 +37,7 @@ module FormPreviewHelper
   # Renders hidden field tracking user submission state. Required in forms.
   # @return [ActiveSupport::SafeBuffer]
   def form_preview_hidden_field
-    hidden_field_tag :_wus, params[:_wus].presence || @form_was_user_submitted
+    hidden_field_tag :_wus, params[:_wus].presence || request.env[WAS_USER_SUBMITTED_KEY]
   end
 
   # @return [Boolean] True if this is a preview request
