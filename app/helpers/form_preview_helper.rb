@@ -1,6 +1,7 @@
 # Helper module for live form preview functionality using Turbo Streams.
 # Works with `form_preview_controller.js` Stimulus controller.
-# See README.md for full documentation and usage examples.
+# See https://github.com/cmer/rails-dynamic-form-preview-pattern/blob/main/README.md
+# for full documentation and usage examples.
 module FormPreviewHelper
   # Handles form preview requests by rendering a Turbo Stream morph response.
   # Returns true if preview was rendered, nil if normal form submission.
