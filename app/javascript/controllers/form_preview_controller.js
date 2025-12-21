@@ -67,22 +67,21 @@ export default class extends Controller {
       }
     }
 
-    form.noValidate = true
-    form.requestSubmit()
-
-    // Defer restoration to next tick so Turbo can capture the modified form state
-    setTimeout(() => {
+    // Restore form state after Turbo sends the submission
+    form.addEventListener("turbo:submit-end", () => {
       form.action = originalAction
       form.method = originalMethod
       form.noValidate = hadNoValidate
 
-      // Restore Rails _method field if it was removed
       if (methodField) {
         form.appendChild(methodField)
       }
 
       formPreviewInput.remove()
-    }, 0)
+    }, { once: true })
+
+    form.noValidate = true
+    form.requestSubmit()
   }
 
   disconnect() {
