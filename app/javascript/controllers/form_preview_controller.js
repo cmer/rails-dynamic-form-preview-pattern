@@ -74,7 +74,7 @@ export default class extends Controller {
       form.noValidate = hadNoValidate
 
       if (methodField) {
-        form.appendChild(methodField)
+        form.insertBefore(methodField, form.firstChild)
       }
 
       formPreviewInput.remove()
