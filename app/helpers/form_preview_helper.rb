@@ -9,11 +9,12 @@ module FormPreviewHelper
   # Returns true if preview was rendered, nil if normal form submission.
   #
   # @param model [ActiveRecord::Base] The model instance to preview
+  # @param render_turbo_stream [Boolean] Whether to render a Turbo Stream response (default: true)
   # @option args [String] :id DOM ID of form to replace (default: "#{model_name}-form")
   # @option args [String] :partial Partial to render (default: "form")
   # @option args [Hash] :locals Local variables for partial (default: { model_name: model })
   # @return [Boolean, nil]
-  def render_form_preview(model, **args)
+  def render_form_preview(model, render_turbo_stream: true, **args)
     if !form_preview?
       request.env[WAS_USER_SUBMITTED_KEY] = true
       return
@@ -24,12 +25,14 @@ module FormPreviewHelper
     locals = args[:locals] || { model.model_name.singular.to_sym => model }
     id = args[:id] || form_preview_form_id(model)
 
-    render turbo_stream: turbo_stream.replace(
-      id,
-      partial: args[:partial] || "form",
-      locals: locals,
-      method: :morph
-    )
+    if render_turbo_stream
+      render turbo_stream: turbo_stream.replace(
+        id,
+        partial: args[:partial] || "form",
+        locals: locals,
+        method: :morph
+      )
+    end
 
     true
   end
