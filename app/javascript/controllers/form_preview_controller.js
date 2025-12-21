@@ -26,7 +26,7 @@ export default class extends Controller {
    * Triggers a debounced form preview submission.
    * Uses element's data-form-preview-debounce-value if set, otherwise controller's value.
    */
-  preview() {
+  preview(event) {
     clearTimeout(this.debounceTimer)
     const customDebounce = event?.target?.dataset?.formPreviewDebounceValue
     const debounceValue = customDebounce ? Number(customDebounce) : this.debounceValue
