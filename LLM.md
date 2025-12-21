@@ -73,6 +73,26 @@ Required elements:
 
 Set debounce on element: `data: { form_preview_debounce_value: 300 }`
 
+### Custom Preview Endpoint (Optional)
+
+Submit previews to a different URL/method than the form's action:
+
+```erb
+<%= form_with model: thing, id: form_preview_form_id(thing),
+    data: {
+      controller: "form-preview",
+      form_preview_url_value: thing_preview_path(thing),
+      form_preview_http_method_value: "get"
+    } do |f| %>
+```
+
+| Value | Description |
+|-------|-------------|
+| `url` | URL to submit preview requests to |
+| `httpMethod` | HTTP method for preview requests |
+
+**Tip:** POST previews may trigger 1Password "Save Identity/Password" dialogs on each request. Use GET to a dedicated endpoint to avoid this.
+
 ## Options
 
 `render_form_preview(model, **options)`:

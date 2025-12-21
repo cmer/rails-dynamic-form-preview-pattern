@@ -333,6 +333,8 @@ Returns `true` if validation should run (user has previously submitted the form)
 | Value | Type | Default | Description |
 |-------|------|---------|-------------|
 | `debounce` | Number | `0` | Default debounce in milliseconds |
+| `url` | String | _(none)_ | Optional URL to submit preview requests to (overrides form action) |
+| `httpMethod` | String | _(none)_ | Optional HTTP method for preview requests (overrides form method) |
 
 Set at controller level:
 
@@ -346,6 +348,24 @@ Override per element:
 <textarea data-action="input->form-preview#preview"
           data-form-preview-debounce-value="300">
 ```
+
+#### Custom Preview Endpoint (Optional)
+
+You can submit preview requests to a different URL and/or HTTP method than the form's default action. This is useful when you want to use a dedicated preview endpoint:
+
+```erb
+<%= form_with model: post,
+              id: form_preview_form_id(post),
+              data: {
+                controller: "form-preview",
+                form_preview_url_value: post_preview_path(post),
+                form_preview_http_method_value: "get"
+              } do |f| %>
+```
+
+When these values are set, preview submissions will use the specified URL/method while the form's normal submit behavior remains unchanged.
+
+> **Note:** POST preview requests may cause password managers like 1Password to display "Save Identity" or "Save Password" dialogs on every preview request, which is disruptive. To avoid this, submit previews via GET to a dedicated endpoint.
 
 #### Actions
 

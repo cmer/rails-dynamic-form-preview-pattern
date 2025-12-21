@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   include FormPreviewHelper
 
-  before_action :set_post, only: %i[show edit update destroy]
+  before_action :set_post, only: %i[show edit update destroy preview]
 
   def index
     @posts = Post.all
@@ -30,13 +30,17 @@ class PostsController < ApplicationController
 
   def update
     @post.assign_attributes(post_params)
-    return if render_form_preview(@post)
 
     if @post.save
       redirect_to @post, notice: "Post was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def preview
+    @post.assign_attributes(post_params)
+    render_form_preview(@post)
   end
 
   def destroy

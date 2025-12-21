@@ -8,15 +8,19 @@ import { Controller } from "@hotwired/stimulus"
  * LLM Guide:     https://github.com/cmer/rails-dynamic-form-preview-pattern/blob/main/LLM.md
  *
  * @example
- *   <form data-controller="form-preview" data-form-preview-debounce-value="0">
+ *   <form data-controller="form-preview" data-form-preview-debounce-value="0"
+ *         data-form-preview-url-value="/posts/1/preview" data-form-preview-http-method-value="get">
  *     <%= form_preview_hidden_field %>
  *     <input data-action="blur->form-preview#preview">
  *     <textarea data-action="input->form-preview#preview" data-form-preview-debounce-value="300">
  *   </form>
  */
 export default class extends Controller {
-  /** @type {{ debounce: { type: NumberConstructor, default: number } }} */
-  static values = { debounce: { type: Number, default: 0 } }
+  static values = {
+    debounce: { type: Number, default: 0 },
+    url: String,
+    httpMethod: String
+  }
 
   /**
    * Triggers a debounced form preview submission.
@@ -39,9 +43,25 @@ export default class extends Controller {
     formPreviewInput.value = true
     form.appendChild(formPreviewInput)
 
+    // Store original form attributes
+    const originalAction = form.action
+    const originalMethod = form.method
     const hadNoValidate = form.noValidate
+
+    // Override URL and method if values are set
+    if (this.hasUrlValue) {
+      form.action = this.urlValue
+    }
+    if (this.hasHttpMethodValue) {
+      form.method = this.httpMethodValue
+    }
+
     form.noValidate = true
     form.requestSubmit()
+
+    // Restore original form attributes
+    form.action = originalAction
+    form.method = originalMethod
     form.noValidate = hadNoValidate
 
     formPreviewInput.remove()
