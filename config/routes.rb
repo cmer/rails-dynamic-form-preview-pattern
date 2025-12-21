@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :posts do
-    get :preview, on: :member
+    get :preview, on: :member     # /posts/1/preview
+    get :preview, on: :collection # /posts/preview
   end
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

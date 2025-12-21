@@ -48,23 +48,41 @@ export default class extends Controller {
     const originalMethod = form.method
     const hadNoValidate = form.noValidate
 
+    // Temporarily remove Rails _method field if overriding HTTP method
+    const methodField = form.querySelector('input[name="_method"]')
+    if (this.hasHttpMethodValue && methodField) {
+      methodField.remove()
+    }
+
     // Override URL and method if values are set
     if (this.hasUrlValue) {
       form.action = this.urlValue
     }
     if (this.hasHttpMethodValue) {
-      form.method = this.httpMethodValue
+      const method = this.httpMethodValue.toLowerCase()
+      if (method !== "get" && method !== "post") {
+        console.error(`form-preview: httpMethod must be "get" or "post", got "${this.httpMethodValue}"`)
+      } else {
+        form.method = method
+      }
     }
 
     form.noValidate = true
     form.requestSubmit()
 
-    // Restore original form attributes
-    form.action = originalAction
-    form.method = originalMethod
-    form.noValidate = hadNoValidate
+    // Defer restoration to next tick so Turbo can capture the modified form state
+    setTimeout(() => {
+      form.action = originalAction
+      form.method = originalMethod
+      form.noValidate = hadNoValidate
 
-    formPreviewInput.remove()
+      // Restore Rails _method field if it was removed
+      if (methodField) {
+        form.appendChild(methodField)
+      }
+
+      formPreviewInput.remove()
+    }, 0)
   }
 
   disconnect() {

@@ -334,7 +334,7 @@ Returns `true` if validation should run (user has previously submitted the form)
 |-------|------|---------|-------------|
 | `debounce` | Number | `0` | Default debounce in milliseconds |
 | `url` | String | _(none)_ | Optional URL to submit preview requests to (overrides form action) |
-| `httpMethod` | String | _(none)_ | Optional HTTP method for preview requests (overrides form method) |
+| `httpMethod` | String | _(none)_ | Optional HTTP method for preview requests: `"get"` or `"post"` only |
 
 Set at controller level:
 

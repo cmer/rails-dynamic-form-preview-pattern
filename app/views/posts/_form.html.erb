@@ -1,4 +1,9 @@
-<%= form_with model: post, id: form_preview_form_id(post), data: { controller: "form-preview", form_preview_url: "#{form_preview_form_id(post)}/preview", form_preview_http_method: "get", form_preview_debounce_value: 0 } do |f| %>
+<%= form_with model: post, id: form_preview_form_id(post), data: {
+    controller: "form-preview",
+    form_preview_url_value: (post.persisted? ? preview_post_path(post) : preview_posts_path),
+    form_preview_http_method_value: "get",
+    form_preview_debounce_value: 0
+  } do |f| %>
   <%= form_preview_hidden_field %>
 
   <div>

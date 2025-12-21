@@ -89,7 +89,7 @@ Submit previews to a different URL/method than the form's action:
 | Value | Description |
 |-------|-------------|
 | `url` | URL to submit preview requests to |
-| `httpMethod` | HTTP method for preview requests |
+| `httpMethod` | HTTP method for preview requests (`"get"` or `"post"` only) |
 
 **Tip:** POST previews may trigger 1Password "Save Identity/Password" dialogs on each request. Use GET to a dedicated endpoint to avoid this.
 
